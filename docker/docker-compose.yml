@@ -1,0 +1,24 @@
+services:
+  nodejs-ws-listener:
+    build:
+      context: ../backend/listener
+      dockerfile: Dockerfile
+    ports:
+      - "8766:8766"
+    environment:
+      - NODE_ENV=prod
+    depends_on:
+      - python-ws-emitter
+
+  python-ws-emitter:
+    build:
+      context: ../backend/emitter
+      dockerfile: Dockerfile
+    ports:
+      - "8765:8765"
+  client:
+    build:
+      context: ../client
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
